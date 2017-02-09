@@ -44,7 +44,7 @@ const config = Object.assign({}, baseConfig, {
       },
       {
         test: /\.css$/,
-        loaders: ['style', 'css'],
+        loaders: 'style-loader!css-loader!autoprefixer-loader?{browsers:["last 2 version", "firefox 15"]}!sass-loader?outputStyle=expanded',
         include: `${defaultSettings.srcPath}/vendors/`,
       },
       {
@@ -57,6 +57,10 @@ const config = Object.assign({}, baseConfig, {
         include: defaultSettings.srcPath,
         exclude: `${defaultSettings.srcPath}/vendors/`,
       },
+      {
+        test: '/\.json$/',
+        loader: 'json-loader'
+      }
     ],
   },
 });

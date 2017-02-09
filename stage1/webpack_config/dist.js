@@ -56,6 +56,10 @@ const config = Object.assign({}, baseConfig, {
         include: defaultSettings.srcPath,
         exclude: `${defaultSettings.srcPath}/vendors/`,
       },
+        {
+          test: '/\.json$/',
+          loader: 'json-loader'
+        }
     ],
   },
 });
