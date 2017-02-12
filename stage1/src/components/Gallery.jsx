@@ -1,13 +1,9 @@
 import React from 'react';
-// import { render } from 'react-dom';
+import { render, findDOMNode } from 'react-dom';
 
 import ImageFigure from './ImageFigure';
 
-
-
 let imageDatas = require('json-loader!../data/imageData.json');
-
-console.log(imageDatas[0]);
 
 const genImageURL = imageDataArr => {
   imageDataArr.forEach(imageData => {
@@ -16,17 +12,16 @@ const genImageURL = imageDataArr => {
   return imageDataArr;
 }
 
+const getRangeRandom = (low, high) => Math.floor(Math.random() * (high- low) + low);
+
 imageDatas = genImageURL(imageDatas); //添加图片地址
 
-class Gallery extends React.PureComponent {
+class Gallery extends React.Component {
   constructor() {
     super();
-  }
-
-  getInitialState() {
-    return {
-      Constant: {
-        centerPos: {
+    this.state = { imgsArr: [] };
+    this.Constant = {
+      centerPos: {
           left: 0,
           right: 0
         },
@@ -39,39 +34,100 @@ class Gallery extends React.PureComponent {
           x: [0, 0],
           topY: [0, 0]
         }
-      }
     }
   }
 
   // 组件挂在以后， 为每张图片计算位置的范围
   componentDidMount() {
-    const stageDOM = React.findDOMNode(this.ref.stage),
+    const stageDOM =this.refs.stage,
           stageWidth = stageDOM.scrollWidth,
           stageHight = stageDOM.scrollHeight,
           halfStageW = Math.ceil(stageWidth / 2),
           halfStageH = Math.ceil(stageHight / 2);
 
-    const imgFigure = React.findDOMNode(this.ref.imgFigure0),
+    const imgFigure = findDOMNode(this.refs.imgFigure0),
           imgWidth = imgFigure.scrollWidth,
           imgHeight = imgFigure.scrollHeight,
           halfImgW = Math.ceil(imgWidth / 2),
           halfImgH = Math.ceil(imgHeight / 2);
 
-    this.setState({Constant: {
+    this.Constant = {
       centerPos: {
         left: halfStageW - halfImgW,
         top: halfStageH - halfImgH
       },
       hPosRange: {
-        leftSecX: [-halfImgW, halfStageW - halfImgW / 2 * 3],
+        leftSecX: [-halfImgW, halfStageW - halfImgW * 3],
         rightSecX: [halfStageW + halfImgW, stageWidth - halfImgW],
         y: [-halfImgH, stageHight - halfImgH]
       },
       vPosRange: {
-        topY: [-halfImgH, halfStageH - halfImgH / 2 * 3],
+        topY: [-halfImgH, halfStageH - halfImgH * 3],
         x: [halfStageW - imgWidth, halfStageW]
       }
-    }});
+    };
+
+    this.setCenter(0);
+
+  }
+
+  /**
+   * 设置中心图片 并重新布局
+   * @param centerIndex 指定中心图片
+   */
+  setCenter(centerIndex) {
+
+    const imgsArr = this.state.imgsArr,
+          Constant = this.Constant,
+          centerPos = Constant.centerPos,
+          hPosRange = Constant.hPosRange,
+          vPosRange = Constant.vPosRange,
+          hPosRangeLeftSecX = hPosRange.leftSecX,
+          hPosRangeRightSecX = hPosRange.rightSecX,
+          hPosRangeY = hPosRange.y,
+          vPosRangeTopY = vPosRange.topY,
+          vPosRangeX = vPosRange.x;
+
+    var imgsTopArr = [],
+        topImgNum = Math.floor(Math.random() * 2), //取一张或不取图片放在中心图片的上方
+        topImgSpliceIndex = 0,
+        imgsCentArr = imgsArr.splice(centerIndex, 1);
+
+    //居中centerIndex 垂直方向的图片
+    imgsCentArr[0].pos = centerPos;
+
+    //取出要布局的上侧的图片
+    topImgSpliceIndex = Math.floor(Math.random() * (imgsArr.length - topImgNum));
+    imgsTopArr = imgsArr.splice(topImgSpliceIndex, topImgNum);
+
+    //布局位于上侧的图片
+    imgsTopArr.forEach((value, index) => {
+      imgsTopArr[index].pos = {
+        top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
+        left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+      }
+    });
+
+    //布局左右两侧的图片
+    for(let i = 0, j = imgsArr.length, k = j / 2; i < j; i++ ) {
+      let hPosRangeLORX = null;
+
+      //前半部分布局在左边，有半部分布局在右边
+      hPosRangeLORX = i < k ? hPosRangeLeftSecX :hPosRangeRightSecX;
+
+      imgsArr[i].pos = {
+        left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1]),
+        top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
+      }
+    }
+
+    if(imgsTopArr && imgsTopArr[0]) {
+      imgsArr.splice(topImgSpliceIndex, 0, imgsTopArr[0]);
+    }
+
+    imgsArr.splice(centerIndex, 0, imgsCentArr[0]);
+
+    this.setState({ imgsArr: imgsArr});
 
   }
 
@@ -81,8 +137,19 @@ class Gallery extends React.PureComponent {
 
     imageDatas.forEach(function(val, index) {
       // imgFigures.push(<ImageFigure { ...val } key={index} />);
-      imgFigures.push(<ImageFigure data={ val } key={index} ref={'imgFigure' + index}/>);
-    });
+
+      if(!this.state.imgsArr[index]) {
+        this.state.imgsArr[index] =  {
+          pos: {
+            left: 0,
+            top: 0
+          }
+        }
+      }
+
+      imgFigures.push(<ImageFigure data={ val } key={index}
+           ref={'imgFigure' + index} imgPos={ this.state.imgsArr[index] }/>);
+    }.bind(this));
 
     return (
       <section className="stage" ref="stage">
