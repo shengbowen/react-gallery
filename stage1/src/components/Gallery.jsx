@@ -1,5 +1,7 @@
 import React from 'react';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
+
+import ImageFigure from './ImageFigure';
 
 
 
@@ -22,10 +24,22 @@ class Gallery extends React.PureComponent {
   }
 
   render() {
+    const controllerUnits = [],
+          imgFigures = [];
+
+    imageDatas.forEach(function(val, index) {
+      // imgFigures.push(<ImageFigure { ...val } key={index} />);
+      imgFigures.push(<ImageFigure data={ val } key={index} ref={'imgFigure' + index}/>);
+    });
+
     return (
-      <section className="stage">
-        <section className="img-sec"></section>
-        <nav className="controller-nav"></nav>
+      <section className="stage" ref="stage">
+        <section className="img-sec">
+          {imgFigures}
+        </section>
+        <nav className="controller-nav">
+          {controllerUnits}
+        </nav>
       </section>
     );
   }
