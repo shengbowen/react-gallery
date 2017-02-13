@@ -14,12 +14,26 @@ const genImageURL = imageDataArr => {
 
 const getRangeRandom = (low, high) => Math.floor(Math.random() * (high- low) + low);
 
+// 获取-30 到 30 的整数
+const get30DegRandom = () => (Math.random() > 0.5 ? 1 : -1) * Math.ceil(Math.random() * 30);
+
+
 imageDatas = genImageURL(imageDatas); //添加图片地址
 
 class Gallery extends React.Component {
   constructor() {
     super();
-    this.state = { imgsArr: [] };
+    this.state = { imgsArr: [
+      /**
+       * {
+       *    pos: {
+       *        left:  0,
+       *        right: 0
+       *     },
+       *    rotate: 0
+       * }
+       */
+    ] };
     this.Constant = {
       centerPos: {
           left: 0,
@@ -102,9 +116,12 @@ class Gallery extends React.Component {
 
     //布局位于上侧的图片
     imgsTopArr.forEach((value, index) => {
-      imgsTopArr[index].pos = {
-        top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
-        left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+      imgsTopArr[index] =  {
+        pos: {
+          top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
+          left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+        },
+        rotate: get30DegRandom()
       }
     });
 
@@ -115,9 +132,12 @@ class Gallery extends React.Component {
       //前半部分布局在左边，有半部分布局在右边
       hPosRangeLORX = i < k ? hPosRangeLeftSecX :hPosRangeRightSecX;
 
-      imgsArr[i].pos = {
-        left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1]),
-        top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
+      imgsArr[i] = {
+        pos: {
+          left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1]),
+          top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
+        },
+        rotate: get30DegRandom()
       }
     }
 
@@ -143,12 +163,13 @@ class Gallery extends React.Component {
           pos: {
             left: 0,
             top: 0
-          }
+          },
+          rotate: 0
         }
       }
 
       imgFigures.push(<ImageFigure data={ val } key={index}
-           ref={'imgFigure' + index} imgPos={ this.state.imgsArr[index] }/>);
+           ref={'imgFigure' + index} imgStyle={ this.state.imgsArr[index] }/>);
     }.bind(this));
 
     return (

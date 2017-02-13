@@ -11,14 +11,19 @@ class ImageFigure extends React.Component{
     var styleObj = {};
 
     //如果props中指定了样式就是用
-    if(this.props.imgPos) {
-      styleObj = this.props.imgPos;
+    if(this.props.imgStyle) {
+      styleObj = this.props.imgStyle.pos;
       // console.log(styleObj)
     }
 
-    console.log(this.props.imgPos, this.props.imgPos.pos);
+    if(this.props.imgStyle.rotate) {
+      ['Webkit', 'O', 'ms', ''].forEach(
+        (prefix) => styleObj[`${prefix}Transform`] = `rotate(${this.props.imgStyle.rotate}deg)`
+      )
+    }
+
     return (
-      <figure className="img-figure" style={ this.props.imgPos.pos }>
+      <figure className="img-figure" style={ styleObj }>
         <img src={ this.props.data.imageURL } alt={ this.props.data.title }/>
         <figcaption>
           <h2 className="img-figure__title">{ this.props.data.title }</h2>
