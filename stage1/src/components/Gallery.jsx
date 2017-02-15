@@ -32,7 +32,8 @@ class Gallery extends React.Component {
        *        right: 0
        *     },
        *    rotate: 0,
-       *    isInverse: false
+       *    isInverse: false,
+       *    isCenter: false
        * }
        */
     ] };
@@ -110,7 +111,10 @@ class Gallery extends React.Component {
         imgsCentArr = imgsArr.splice(centerIndex, 1);
 
     //居中centerIndex 垂直方向的图片
-    imgsCentArr[0].pos = centerPos;
+    imgsCentArr[0] = {
+      pos: centerPos,
+      isCenter: true,
+    };
 
     //取出要布局的上侧的图片
     topImgSpliceIndex = Math.floor(Math.random() * (imgsArr.length - topImgNum));
@@ -123,7 +127,8 @@ class Gallery extends React.Component {
           top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
           left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
         },
-        rotate: get30DegRandom()
+        rotate: get30DegRandom(),
+        isCenter: false
       }
     });
 
@@ -139,7 +144,8 @@ class Gallery extends React.Component {
           left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1]),
           top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
         },
-        rotate: get30DegRandom()
+        rotate: get30DegRandom(),
+        isCenter: false
       }
     }
 
@@ -167,6 +173,16 @@ class Gallery extends React.Component {
     }
   }
 
+  /**
+   * @param index  用来标记要居中的图片index
+   * @return {Function}
+   */
+  reSetCenter(index) {
+    return () => {
+      this.setCenter(index);
+    }
+  }
+
   render() {
     const controllerUnits = [],
           imgFigures = [];
@@ -181,13 +197,14 @@ class Gallery extends React.Component {
             top: 0
           },
           rotate: 0,
-          isInverse: false
+          isInverse: false,
+          isCenter: false
         }
       }
 
       imgFigures.push(<ImageFigure data={ val } key={index}
            ref={'imgFigure' + index} imgStyle={ this.state.imgsArr[index] }
-           inverse={ this.inverse(index) }/>);
+           inverse={ this.inverse(index) } setCenter={ this.reSetCenter(index) }/>);
     }.bind(this));
 
     return (

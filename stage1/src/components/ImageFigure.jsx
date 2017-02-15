@@ -4,6 +4,18 @@ import React from 'react';
 class ImageFigure extends React.Component{
   constructor() {
     super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    if(this.props.imgStyle.isCenter) {
+      this.props.inverse();
+    }else {
+      this.props.setCenter();
+    }
+
+    e.stopPropagation();
+    e.preventDefault();
   }
 
   render() {
@@ -22,11 +34,20 @@ class ImageFigure extends React.Component{
       )
     }
 
+    if(this.props.imgStyle.isCenter) {
+      styleObj.zIndex = 11;
+    }
+
+    var figureClass = 'img-figure' + (this.props.imgStyle.isInverse ? ' img-figure--inverse' : '');
+
     return (
-      <figure className="img-figure" style={ styleObj }>
-        <img src={ this.props.data.imageURL } alt={ this.props.data.title }/>
+      <figure className={ figureClass } style={ styleObj }>
+        <img src={ this.props.data.imageURL } alt={ this.props.data.title } onClick={ this.handleClick }/>
         <figcaption>
           <h2 className="img-figure__title">{ this.props.data.title }</h2>
+          <div className="img-figure__back" onClick={ this.handleClick }>
+            <p>{this.props.data.description}</p>
+          </div>
         </figcaption>
       </figure>
     )
