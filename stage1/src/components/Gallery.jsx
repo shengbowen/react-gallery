@@ -23,6 +23,7 @@ imageDatas = genImageURL(imageDatas); //添加图片地址
 class Gallery extends React.Component {
   constructor() {
     super();
+    // this.inverse = this.inverse.bind(this);
     this.state = { imgsArr: [
       /**
        * {
@@ -30,7 +31,8 @@ class Gallery extends React.Component {
        *        left:  0,
        *        right: 0
        *     },
-       *    rotate: 0
+       *    rotate: 0,
+       *    isInverse: false
        * }
        */
     ] };
@@ -151,6 +153,20 @@ class Gallery extends React.Component {
 
   }
 
+  /**翻转图片闭包
+   * @param index 用来标记要翻转图片的index
+   * @return {Function} 返回一个函数
+   */
+  inverse(index) {
+    return () => {
+      let imgsArr = this.state.imgsArr;
+      imgsArr[index].isInverse = !imgsArr[index].isInverse;
+      this.setState({
+        imgsArr: imgsArr
+      });
+    }
+  }
+
   render() {
     const controllerUnits = [],
           imgFigures = [];
@@ -164,12 +180,14 @@ class Gallery extends React.Component {
             left: 0,
             top: 0
           },
-          rotate: 0
+          rotate: 0,
+          isInverse: false
         }
       }
 
       imgFigures.push(<ImageFigure data={ val } key={index}
-           ref={'imgFigure' + index} imgStyle={ this.state.imgsArr[index] }/>);
+           ref={'imgFigure' + index} imgStyle={ this.state.imgsArr[index] }
+           inverse={ this.inverse(index) }/>);
     }.bind(this));
 
     return (
