@@ -2,6 +2,7 @@ import React from 'react';
 import { render, findDOMNode } from 'react-dom';
 
 import ImageFigure from './ImageFigure';
+import ControllerUnit from './ControllerUnit';
 
 let imageDatas = require('json-loader!../data/imageData.json');
 
@@ -205,6 +206,9 @@ class Gallery extends React.Component {
       imgFigures.push(<ImageFigure data={ val } key={index}
            ref={'imgFigure' + index} imgStyle={ this.state.imgsArr[index] }
            inverse={ this.inverse(index) } setCenter={ this.reSetCenter(index) }/>);
+
+      controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArr[index]}
+           inverse={this.inverse(index)} setCenter={ this.reSetCenter(index) }/>);
     }.bind(this));
 
     return (
