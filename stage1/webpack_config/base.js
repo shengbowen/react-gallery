@@ -2,15 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 
 const defaultSettings = require('./defaults');
-
 module.exports = {
   port: defaultSettings.port,
   devServer: {
-    contentBase: defaultSettings.srcPath,
+    contentBase: defaultSettings.devOutPath,
     historyApiFallback: true,
     hot: true,
     port: defaultSettings.port,
-    publicPath: defaultSettings.publicPath,
+    publicPath: '/',
     noInfo: true,
   },
   resolve: {

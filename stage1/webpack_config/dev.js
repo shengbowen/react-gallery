@@ -6,23 +6,32 @@ const defaultSettings = require('./defaults');
 // Add needed plugins here
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+console.log(defaultSettings.devOutPath);
 
 const config = Object.assign({}, baseConfig, {
   entry: {
     app: [
       `webpack-dev-server/client?http://127.0.0.1:${defaultSettings.port}`,
       'webpack/hot/dev-server',
+      'react-hot-loader/patch',
       './src/index',
     ],
   },
   output: {
     path: defaultSettings.devOutPath,
-    filename: '[name].dev.js',
-    publicPath: defaultSettings.publicPath,
+    filename: 'react/[name].dev.js',
+    publicPath: '/',
   },
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.tpl.html',
+      inject: 'body',
+      filename: 'index.html'
+    }),
     new ExtractTextPlugin('style.dev.css', { allChunks: true }),
     new AssetsPlugin({
       path: defaultSettings.manifestPath,
@@ -34,8 +43,8 @@ const config = Object.assign({}, baseConfig, {
   module: {
     loaders: [{
         test: /\.(gif|jpg|png|swf|ttf|eot|svg|woff)(\?[a-z0-9]+)?$/,
-        loader: 'file',
-        query: { name: '[name].[hash:base64:5].[ext]' },
+        loader: 'url-loader?limit=8192',
+        // query: { name: '[name].[hash:base64:5].[ext]' },
       },
       {
         test: /\.css$/,
