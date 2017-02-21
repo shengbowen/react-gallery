@@ -1,9 +1,9 @@
-import { createStore, applyMiddleware, combineReducer, compose } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import createLogger from 'redux-logger';
 
-import stage from 'reducers/stage';
+import stage from '../reducers/stage';
 
-const reducer = combineReducer({ stage });
+const reducer = combineReducers({ stage });
 
 let enhancer;
 
