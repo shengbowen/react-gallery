@@ -110,4 +110,10 @@ const setInverse = (index) => {
     type: actionsTypes.setInverse,
     index
   }
+};
+
+export const actions = {
+  initState,
+  setCenter,
+  setInverse
 }
