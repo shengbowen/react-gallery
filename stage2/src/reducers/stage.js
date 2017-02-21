@@ -5,7 +5,7 @@ const defaultState = {
   imgArrangeArr: [],
 }
 
-export default stage = (state = defaultState, action) => {
+export default function stage(state = defaultState, action) {
   switch (action.type) {
     case actionsTypes.INIT_STATE:
       return {
@@ -25,5 +25,8 @@ export default stage = (state = defaultState, action) => {
         ...state,
         imgArrangeArr: [...imgArrangeArr, imgArrangeArr[action.index].isInverse = !imgArrangeArr[action.index].isInverse]
       }
+
+    default:
+      return state; //不能省掉，会报错
   }
 };
