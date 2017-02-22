@@ -46,4 +46,14 @@ class ImageFigure extends React.PureComponent{
   }
 }
 
+ImageFigure.PropTypes = {
+  arrange: PropTypes.shape({
+    pos: PropTypes.object,
+    rotate: PropTypes.number,
+    isCenter: PropTypes.bool,
+    isInverse: PropTypes.bool
+  }),
+  setCenter: PropTypes.func
+}
+
 export default ImageFigure;
