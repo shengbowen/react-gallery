@@ -23,7 +23,7 @@ class Gallery extends React.PureComponent {
           halfImgW = Math.ceil(imgWidth / 2),
           halfImgH = Math.ceil(imgHeight / 2);
 
-    const stage = {
+    this.stageInfo = {
       centerPos: {
         left: halfStageW - halfImgW,
         top: halfStageH - halfImgH
@@ -38,9 +38,17 @@ class Gallery extends React.PureComponent {
         x: [halfStageW - imgWidth, halfStageW]
       }
     };
+    console.log(this.stateInfo);
 
     const { imgArrangeArr, dispatch } = this.props;
-    dispatch(actions.setCenter(0, imgArrangeArr, stage));
+    dispatch(actions.setCenter(0, imgArrangeArr, this.stageInfo));
+  }
+
+  setCenter(index) {
+    const { dispatch, imgArrangeArr } = this.props;
+    return () => {
+      dispatch(actions.setCenter(index, imgArrangeArr, this.stageInfo));
+    }
   }
 
   render() {
@@ -52,7 +60,7 @@ class Gallery extends React.PureComponent {
     imageDatas.forEach((value, index) => {
       imgFigures.push(
         <ImageFigure data={ value } key={ index } ref={(input) => { this[`imgFigure${index}`] = input; }}
-          arrange={ imgArrangeArr[index] }/>
+          arrange={ imgArrangeArr[index] } setCenter={ this.setCenter(index) } />
       )
     });
 

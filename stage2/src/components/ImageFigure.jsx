@@ -3,6 +3,13 @@ import React, { PropTypes } from 'react';
 class ImageFigure extends React.PureComponent{
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    this.props.setCenter();
+    e.stopPropagation();
+    e.preventDefault();
   }
 
   render() {
@@ -10,7 +17,7 @@ class ImageFigure extends React.PureComponent{
     const { arrange, data } = this.props;
 
     if(arrange) {
-      styleObj = {...arrange.pos}; //如果直接 styleObj=arrange.pos，对styleObj的更改会应道arrange.pos
+      styleObj = {...arrange.pos}; //如果直接 styleObj=arrange
     }
 
     if(arrange.rotate) {
@@ -26,7 +33,7 @@ class ImageFigure extends React.PureComponent{
     let figureClass = 'img-figure' + (arrange.isInverse ? ' img-figure--inverse' : '');
 
     return (
-      <figure className={ figureClass } style={ styleObj }>
+      <figure className={ figureClass } style={ styleObj } onClick={ this.handleClick }>
         <img src={ data.imageUrl } alt={ data.title } />
         <figcaption>
           <h2 className="img-figure__title">{ data.title }</h2>
