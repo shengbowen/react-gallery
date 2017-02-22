@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
   const logger = createLogger();
   enhancer = compose(
     applyMiddleware(logger),
-    window.devToolsExtension ? window.devToolsExtension() : f => f, // Hook for Redux DevTools Extension. see https://github.com/zalmoxisus/redux-devtools-extension
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // Hook for Redux DevTools Extension. see https://github.com/zalmoxisus/redux-devtools-extension
   )
 } else {
   enhancer = null;
