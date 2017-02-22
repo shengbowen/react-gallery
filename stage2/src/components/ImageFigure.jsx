@@ -10,12 +10,12 @@ class ImageFigure extends React.PureComponent{
     const { arrange, data } = this.props;
 
     if(arrange) {
-      styleObj = arrange;
+      styleObj = {...arrange.pos}; //如果直接 styleObj=arrange.pos，对styleObj的更改会应道arrange.pos
     }
 
     if(arrange.rotate) {
       ['Webkit', 'O', 'ms', ''].forEach(
-        (prefix) => styleObj[`${prefix}Transform`] = `rotate(${arrange.rotate})`
+        (prefix) => styleObj[`${prefix}Transform`] = `rotate(${arrange.rotate}deg)`
       );
     }
 
