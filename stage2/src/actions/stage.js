@@ -5,7 +5,7 @@ export const actionsTypes = {
   INIT_STATE: 'INIT_STATE'
 };
 
-const getRangeRandom = (low, high) => Math.floor(Math.random() * (high - low) + high);
+const getRangeRandom = (low, high) => Math.floor(Math.random() * (high - low) + low);
 
 const get30DegRandom = () => (Math.random() > 0.5 ? 1 : -1) * Math.ceil(Math.random() * 30);
 
@@ -37,19 +37,20 @@ const initState = () => {
   }
 };
 
-const setCenter = (centerIndex, imgArrangeArr, stage) => {
+const setCenter = (centerIndex, oldImgArrangeArr, stage) => {
+  let imgArrangeArr = [].concat(oldImgArrangeArr); //保持原state不变
   const centerPos = stage.centerPos,
     hPosRange = stage.hPosRange,
     vPosRange = stage.vPosRange,
     hPosRangeLeftSecX = hPosRange.leftSecX,
     hPosRangeRightSecX = hPosRange.rightSecX,
     hPosRangeY = hPosRange.y,
-    vPosRangeTopY = vPosRange.tooY,
+    vPosRangeTopY = vPosRange.topY,
     vPosRangeX = vPosRange.x;
 
   let imgsTopArr = [],
-    topImgNum = Math.floor(Math.random() * 2); //取一张或不取图片放在中心图片的上方
-  topImgSpliceIndex = 0,
+    topImgNum = Math.floor(Math.random() * 2), //取一张或不取图片放在中心图片的上方
+    topImgSpliceIndex = 0,
     imgsCenterArr = imgArrangeArr.splice(centerIndex, 1);
 
   //居中centerIndex 垂直方向的图片
@@ -83,7 +84,7 @@ const setCenter = (centerIndex, imgArrangeArr, stage) => {
     hPosRangeLORX = i < k ? hPosRangeLeftSecX : hPosRangeRightSecX;
 
     imgArrangeArr[i] = {
-      ...imgArrangeArr,
+      ...imgArrangeArr[i],
       pos: {
         left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1]),
         top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
