@@ -7,7 +7,11 @@ class ImageFigure extends React.PureComponent{
   }
 
   handleClick(e) {
-    this.props.setCenter();
+    if(this.props.arrange.isCenter) {
+      this.props.setInverse();
+    } else {
+      this.props.setCenter();
+    }
     e.stopPropagation();
     e.preventDefault();
   }

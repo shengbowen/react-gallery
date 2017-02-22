@@ -4,6 +4,7 @@ import { findDOMNode } from 'react-dom';
 
 import { actions } from 'actions/stage';
 import ImageFigure from '../components/ImageFigure';
+import ControllerUnit from '../components/ControllerUnit';
 
 class Gallery extends React.PureComponent {
   constructor(props) {
@@ -38,7 +39,6 @@ class Gallery extends React.PureComponent {
         x: [halfStageW - imgWidth, halfStageW]
       }
     };
-    console.log(this.stateInfo);
 
     const { imgArrangeArr, dispatch } = this.props;
     dispatch(actions.setCenter(0, imgArrangeArr, this.stageInfo));
@@ -51,6 +51,13 @@ class Gallery extends React.PureComponent {
     }
   }
 
+  setInverse(index) {
+    const { dispatch } = this.props;
+    return () => {
+      dispatch(actions.setInverse(index));
+    }
+  }
+
   render() {
     const controllerUnits = [],
           imgFigures = [];
@@ -60,8 +67,12 @@ class Gallery extends React.PureComponent {
     imageDatas.forEach((value, index) => {
       imgFigures.push(
         <ImageFigure data={ value } key={ index } ref={(input) => { this[`imgFigure${index}`] = input; }}
-          arrange={ imgArrangeArr[index] } setCenter={ this.setCenter(index) } />
-      )
+          arrange={ imgArrangeArr[index] } setCenter={ this.setCenter(index) } setInverse={ this.setInverse(index) } />
+      );
+
+      controllerUnits.push(
+        <ControllerUnit key={index} />
+      );
     });
 
     return (
