@@ -71,7 +71,8 @@ class Gallery extends React.PureComponent {
       );
 
       controllerUnits.push(
-        <ControllerUnit key={index} />
+        <ControllerUnit key={index} arrange={ imgArrangeArr[index] }
+          setCenter={ this.setCenter(index) } setInverse={ this.setInverse(index) }/>
       );
     });
 

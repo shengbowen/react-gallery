@@ -57,7 +57,9 @@ const setCenter = (centerIndex, oldImgArrangeArr, stage) => {
   imgsCenterArr[0] = {
     ...imgsCenterArr[0],
     pos: centerPos,
-    isCenter: true
+    isCenter: true,
+    isInverse: false,
+    rotate: 0
   };
 
   //取出布局上侧的图片
@@ -72,7 +74,8 @@ const setCenter = (centerIndex, oldImgArrangeArr, stage) => {
         top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
         left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
       },
-      rotate: get30DegRandom()
+      rotate: get30DegRandom(),
+      isCenter: false
     }
   });
 
@@ -89,7 +92,8 @@ const setCenter = (centerIndex, oldImgArrangeArr, stage) => {
         left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1]),
         top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
       },
-      rotate: get30DegRandom()
+      rotate: get30DegRandom(),
+      isCenter: false
     }
   }
 
