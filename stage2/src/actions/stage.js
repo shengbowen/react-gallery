@@ -108,7 +108,7 @@ const setCenter = (centerIndex, oldImgArrangeArr, stage) => {
 
 const setInverse = (index) => {
   return {
-    type: actionsTypes.setInverse,
+    type: actionsTypes.SET_INVERSE,
     index
   }
 };

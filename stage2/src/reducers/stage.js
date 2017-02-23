@@ -21,9 +21,16 @@ export default function stage(state = defaultState, action) {
       };
 
     case actionsTypes.SET_INVERSE:
+
+      let imgArrangeArr = [].concat(state.imgArrangeArr);
+      imgArrangeArr[action.index] = {
+        ...imgArrangeArr[action.index],
+        isInverse: !imgArrangeArr[action.index].isInverse
+      }
+
       return {
         ...state,
-        imgArrangeArr: [...imgArrangeArr, imgArrangeArr[action.index].isInverse = !imgArrangeArr[action.index].isInverse]
+        imgArrangeArr
       }
 
     default:
