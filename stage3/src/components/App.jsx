@@ -8,8 +8,8 @@ class App extends React.PureComponent {
       <div>
         { this.props.children }
         <ul className='nav-link'>
-          <li><IndexLink to='/'>first</IndexLink></li>
-          <li><Link to='/lists'>second</Link></li>
+          <li><IndexLink to='/' className="icon icon-item" activeClassName='icon__active'/></li>
+          <li><Link to='/lists' className="icon icon-lists" activeClassName='icon__active' /></li>
         </ul>
       </div>
     )
