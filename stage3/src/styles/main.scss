@@ -116,6 +116,10 @@ body {
     box-sizing: border-box;
     transform: rotateY(180deg)translateZ(1px);
     backface-visibility: hidden;
+    p {
+      overflow: scroll;
+      height: 220px;
+    }
   }
   &__edit {
     position: absolute;
@@ -220,5 +224,92 @@ body {
       text-overflow: ellipsis;
       color: #999;
     }
+  }
+}
+
+.single-wrap {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 2;
+  h1 {
+    font-family: simsun;
+    text-align: center;
+    font-size: 80px;
+    margin: 2rem 0;
+    letter-spacing: -1px;
+    text-shadow: 0px 4px 0 rgba(18,86,136,0.11);
+    a {
+      text-decoration: none;
+      color: #125688;
+    }
+  }
+}
+
+.single-photo {
+  max-width: 800px;
+  display: flex;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #edeeed;
+  padding: 30px;
+  box-shadow: 0 0 0 5px rgba(0,0,0,0.03);
+
+  .figure-wrap {
+    flex: 1 0 60%;
+    max-width: 60%;
+    margin: 0;
+    text-align: center;
+    img {
+      width: 100%;
+      max-width: 240px;
+    }
+    figcaption {
+      font-size: 20px;
+    }
+  }
+
+}
+
+.comment {
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(0,0,0, 0.1);
+  strong {
+    color: #125688;
+    margin-right: 5px;
+  }
+
+  .delete {
+    display: inline-block;
+    background: none;
+    opacity: 0;
+    border: none;
+    color: #125688;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    &:hover{
+      color: red;
+    }
+  }
+  &:hover {
+    .delete {
+      opacity: 1;
+    }
+  }
+}
+
+.comment-form{
+  input[type=text] {
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0, 0.1);
+    padding: 10px 0;
+    outline: none;
   }
 }

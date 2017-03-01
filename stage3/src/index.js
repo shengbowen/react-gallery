@@ -8,11 +8,12 @@ require('./styles/main.scss');
 import Gallery from './components/Gallery';
 import App from './components/App';
 import ImgList from './components/ImgList';
+import Single from './components/Single';
 import store from 'config/store';
 import { actions } from 'actions/stage';
 
 //初始化store，如果不在这里调用，初始state的imgArrangeArr为[]空数组，会触发render，导致后面ref取不到Dom节点
-store.dispatch(actions.initState());
+// store.dispatch(actions.initState());
 
 render(
   <Provider store={ store }>
@@ -20,6 +21,7 @@ render(
       <Route path='/' component={ App }>
         <IndexRoute component={ Gallery } />
         <Route path="/lists" component={ ImgList } />
+        <Route path="/view/:imageId" component={ Single } />
       </Route>
     </Router>
   </Provider>,
