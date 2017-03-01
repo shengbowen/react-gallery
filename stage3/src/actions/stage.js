@@ -2,40 +2,40 @@ export const actionsTypes = {
   // RESET_POSITION: 'RESET_POSITION',
   SET_CENTER: 'SET_CENTER',
   SET_INVERSE: 'SET_INVERSE',
-  INIT_STATE: 'INIT_STATE'
+  // INIT_STATE: 'INIT_STATE'
 };
 
 const getRangeRandom = (low, high) => Math.floor(Math.random() * (high - low) + low);
 
 const get30DegRandom = () => (Math.random() > 0.5 ? 1 : -1) * Math.ceil(Math.random() * 30);
 
-/**
- *初始化state，读取json文件获取图片地址信息，初始化图片舞台布局信息
- */
-const initState = () => {
-  let imageDatas = require('json-loader!../data/imageData.json');
-  let imgArrangeArr = [];
+// /**
+//  *初始化state，读取json文件获取图片地址信息，初始化图片舞台布局信息
+//  */  该部分内容挪到 config/store中作为 defaultState
+// const initState = () => {
+//   let imageDatas = require('json-loader!../data/imageData.json');
+//   let imgArrangeArr = [];
 
-  imageDatas.forEach((image, index) => {
-    image.imageUrl = require('../images/' + image.name);
-    imgArrangeArr.push({
-      id: index,
-      pos: {
-        left: 0,
-        right: 0
-      },
-      rotate: 0,
-      isInverse: false,
-      isCenter: false
-    });
-  });
+//   imageDatas.forEach((image, index) => {
+//     image.imageUrl = require('../images/' + image.name);
+//     imgArrangeArr.push({
+//       id: index,
+//       pos: {
+//         left: 0,
+//         right: 0
+//       },
+//       rotate: 0,
+//       isInverse: false,
+//       isCenter: false
+//     });
+//   });
 
-  return {
-    type: actionsTypes.INIT_STATE,
-    imageDatas,
-    imgArrangeArr
-  }
-};
+//   return {
+//     type: actionsTypes.INIT_STATE,
+//     imageDatas,
+//     imgArrangeArr
+//   }
+// };
 
 const setCenter = (centerIndex, oldImgArrangeArr, stage) => {
   let imgArrangeArr = [].concat(oldImgArrangeArr); //保持原state不变
@@ -118,7 +118,7 @@ const setInverse = (index) => {
 };
 
 export const actions = {
-  initState,
+  // initState,
   setCenter,
   setInverse
 }
