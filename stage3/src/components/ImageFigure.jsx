@@ -44,7 +44,7 @@ class ImageFigure extends React.PureComponent{
           <h2 className="img-figure__title">{ data.title }</h2>
           <div className="img-figure__back">
             <p>{ data.description }</p>
-            <EditButton></EditButton>
+            <EditButton data={ data }></EditButton>
           </div>
         </figcaption>
       </figure>
