@@ -9,6 +9,11 @@ class Comment extends React.PureComponent {
     this.renderComments = this.renderComments.bind(this);
   }
 
+  componentWillUnmount() {
+    const { comments } = this.props;
+    window.localStorage.setItem('comments', JSON.stringify(comments));
+  }
+
   renderComments(comment, i) {
     return (
       <div className="comment" key={ i }>

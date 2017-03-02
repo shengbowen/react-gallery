@@ -14,14 +14,15 @@ if (process.env.NODE_ENV !== 'production') {
     applyMiddleware(logger),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // Hook for Redux DevTools Extension. see https://github.com/zalmoxisus/redux-devtools-extension
   )
-} else {
-  enhancer = null;
 }
 
 //初始化state
 let imageDatas = require('json-loader!../data/imageData.json');
 let imgArrangeArr = [];
-import {comments as commentsData} from '../data/comments';
+let localComments = window.localStorage.getItem('comments');
+import { comments as initComments } from '../data/comments';
+const commetsData = localComments ? JSON.parse(localComments) : initComments;
+
 
 imageDatas.forEach((image, index) => {
   image.imageUrl = require('../images/' + image.name);
@@ -42,7 +43,7 @@ const defaultState = {
     imageDatas,
     imgArrangeArr
   },
-  comments: commentsData
+  comments: commetsData
 }
 
 

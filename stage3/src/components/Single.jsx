@@ -4,6 +4,7 @@ import { IndexLink } from 'react-router';
 import Comment from '../components/Comment';
 
 class Single extends React.PureComponent {
+
   render() {
     const imageData = this.props.imageDatas.find(image => image.id == this.props.params.imageId);
 
@@ -13,7 +14,7 @@ class Single extends React.PureComponent {
         <div className="single-photo">
           <figure className="figure-wrap">
             <img src={ imageData.imageUrl } alt=""/>
-            <figcaption>{ imageData.description }</figcaption>
+            <figcaption>{ imageData.title }</figcaption>
           </figure>
           <Comment { ...this.props }/>
         </div>
