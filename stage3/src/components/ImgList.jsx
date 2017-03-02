@@ -18,7 +18,6 @@ class ImgList extends React.PureComponent {
   render() {
 
     const { imageDatas } = this.props;
-    console.log(imageDatas);
     return (
       <div className="img-list">
         { imageDatas.map((item,i) => (<Img {...item} key={i} />)) }

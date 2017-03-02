@@ -5,7 +5,7 @@ import Comment from '../components/Comment';
 
 class Single extends React.PureComponent {
   render() {
-    const imageData = this.props.imageDatas[this.props.params.imageId];
+    const imageData = this.props.imageDatas.find(image => image.id == this.props.params.imageId);
 
     return (
       <div className="single-wrap">

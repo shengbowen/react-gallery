@@ -117,7 +117,7 @@ body {
     transform: rotateY(180deg)translateZ(1px);
     backface-visibility: hidden;
     p {
-      overflow: scroll;
+      overflow: auto;
       height: 220px;
     }
   }

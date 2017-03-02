@@ -6,6 +6,7 @@ class Comment extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.renderComments = this.renderComments.bind(this);
   }
 
   renderComments(comment, i) {
@@ -13,7 +14,7 @@ class Comment extends React.PureComponent {
       <div className="comment" key={ i }>
         <strong>{ comment.user }</strong>
         { comment.text }
-        <button className="delete">&times;</button>
+        <button className="delete" onClick={ ()=>{ this.props.dispatch(actions.removeComment(this.props.params.imageId, i)); } }>&times;</button>
       </div>
     )
   }
@@ -27,6 +28,7 @@ class Comment extends React.PureComponent {
     e.stopPropagation();
     e.preventDefault();
     this.commentForm.reset();
+    this.author.focus();
   }
 
   render() {
